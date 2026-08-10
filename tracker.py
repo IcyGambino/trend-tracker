@@ -23,7 +23,10 @@ from zoneinfo import ZoneInfo
 # ---------------------------------------------------------------------------
 # CONFIG  —  edit these
 # ---------------------------------------------------------------------------
-TICKERS = ["SPY", "QQQ"]        # add / remove symbols here
+TICKERS = ["SPY", "QQQ", "IWM", "SMH", "VXX", "MSFT", "NVDA", "TSLA", "PLTR", "SPCX"]  # add / remove symbols here
+INVERSE_TICKERS = {"VXX", "TLT", "UVXY"}  # risk-off tells: price UP = market-bearish.
+                                # Bias is flipped so confluence reads them correctly.
+                                # Only applies if the symbol is also in TICKERS.
 DEADBAND_PCT = 0.001            # 0.1% neutral zone around the open (anti-whipsaw)
 POST_EVERY_RUN = True           # True: post status every run. False: flips only.
 ALERT_ON_NEW_DAY = True         # (flip-only mode) announce starting bias each day
@@ -68,12 +71,13 @@ def send_discord(symbol, bias, price, open_, event, prev_bias=None):
     color = {"bullish": 0x2ECC71, "bearish": 0xE74C3C}.get(bias, 0x95A5A6)
     arrow = {"bullish": "\u25b2", "bearish": "\u25bc"}.get(bias, "\u2014")
 
+    inv = " (inv)" if symbol in INVERSE_TICKERS else ""
     if event == "flip":
-        title = f"{arrow} {symbol} flipped {prev_bias.upper()} \u2192 {bias.upper()}"
+        title = f"{arrow} {symbol}{inv} flipped {prev_bias.upper()} \u2192 {bias.upper()}"
     elif event == "open":
-        title = f"{arrow} {symbol} opening bias: {bias.upper()}"
+        title = f"{arrow} {symbol}{inv} opening bias: {bias.upper()}"
     else:  # "status"
-        title = f"{arrow} {symbol} {bias.upper()}"
+        title = f"{arrow} {symbol}{inv} {bias.upper()}"
 
     payload = {
         "embeds": [{
@@ -178,6 +182,8 @@ def main():
         prev_bias = None if new_day else rec.get("bias")   # fresh slate each day
 
         bias = classify(price, open_, DEADBAND_PCT)
+        if symbol in INVERSE_TICKERS and bias != "neutral":
+            bias = "bearish" if bias == "bullish" else "bullish"
         flipped = (
             bias != "neutral"
             and prev_bias not in (None, "neutral")
