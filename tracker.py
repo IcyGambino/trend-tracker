@@ -99,6 +99,42 @@ def send_discord(symbol, bias, price, open_, event, prev_bias=None):
     urllib.request.urlopen(req, timeout=15).read()
 
 
+def send_discord_combined(kind: str, bias: str, details: list):
+    """Post a combined market alert. kind: 'confluence' or 'divergence'."""
+    if kind == "confluence":
+        color = {"bullish": 0x2ECC71, "bearish": 0xE74C3C}.get(bias, 0x95A5A6)
+        arrow = {"bullish": "\u25b2", "bearish": "\u25bc"}.get(bias, "\u2014")
+        title = f"{arrow}{arrow} MARKET CONFLUENCE: ALL {bias.upper()}"
+        desc = "Every tracked ticker is pointing the same way."
+    else:
+        color = 0xF1C40F  # yellow — mixed tape
+        title = "\u26a0\ufe0f MARKET DIVERGENCE: MIXED SIGNALS"
+        desc = "Tracked tickers disagree on direction."
+
+    payload = {
+        "embeds": [{
+            "title": title,
+            "description": desc,
+            "color": color,
+            "fields": [
+                {"name": sym, "value": f"{b.upper()} ({pct:+.2f}%)", "inline": True}
+                for sym, b, pct in details
+            ],
+            "timestamp": datetime.now(tz=ZoneInfo("UTC")).isoformat(),
+        }]
+    }
+    req = urllib.request.Request(
+        DISCORD_WEBHOOK_URL,
+        data=json.dumps(payload).encode(),
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "trend-tracker (github-actions, v1)",
+        },
+        method="POST",
+    )
+    urllib.request.urlopen(req, timeout=15).read()
+
+
 def load_state() -> dict:
     if STATE_FILE.exists():
         try:
@@ -181,6 +217,49 @@ def main():
             "open": open_,
             "updated": now_et.isoformat(),
         }
+
+    # ------------------------------------------------------------------
+    # Combined market read: confluence / divergence across all tickers.
+    # Posts only when the combined state CHANGES, so it stays meaningful.
+    # ------------------------------------------------------------------
+    reads = []
+    for symbol in TICKERS:
+        rec = state.get(symbol, {})
+        if rec.get("day") != today:
+            continue
+        b = rec.get("bias")
+        if b in ("bullish", "bearish"):
+            price, open_ = rec.get("price", 0), rec.get("open", 0)
+            pct = (price / open_ - 1) * 100 if open_ else 0
+            reads.append((symbol, b, pct))
+
+    combined = "unknown"
+    if len(reads) >= 2:
+        biases = {b for _, b, _ in reads}
+        if biases == {"bullish"}:
+            combined = "confluence-bullish"
+        elif biases == {"bearish"}:
+            combined = "confluence-bearish"
+        elif "bullish" in biases and "bearish" in biases:
+            combined = "divergence"
+
+    prev_combined = state.get("_combined", {})
+    prev_val = prev_combined.get("state") if prev_combined.get("day") == today else None
+
+    if combined != "unknown" and combined != prev_val:
+        try:
+            if combined.startswith("confluence"):
+                send_discord_combined("confluence", combined.split("-")[1], reads)
+            else:
+                send_discord_combined("divergence", "", reads)
+            print(f"[COMBINED] POST {prev_val} -> {combined}")
+        except (urllib.error.URLError, TimeoutError) as e:
+            print(f"[COMBINED] discord post failed: {e}")
+    else:
+        print(f"[COMBINED] {combined} (prev {prev_val}) - no post")
+
+    if combined != "unknown":
+        state["_combined"] = {"state": combined, "day": today}
 
     save_state(state)
 
