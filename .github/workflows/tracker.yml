@@ -39,7 +39,22 @@ jobs:
           fi
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add state.json
-          git commit -m "Update trend state [skip ci]"
-          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
-          git push
+
+          # Keep our fresh reading, then commit it on top of whatever the remote
+          # currently has. If another run pushed first, re-sync and reapply.
+          # "latest read wins" — no interactive merge, so it can never wedge.
+          cp state.json /tmp/state.json
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard "origin/${GITHUB_REF_NAME}"
+            cp /tmp/state.json state.json
+            git add state.json
+            git commit -m "Update trend state [skip ci]" || { echo "Nothing to commit."; exit 0; }
+            if git push; then
+              echo "Pushed on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected (attempt $attempt) — remote moved, retrying."
+          done
+          echo "Could not push state after retries — next run will refresh it."
+          exit 0
