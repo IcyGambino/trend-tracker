@@ -90,7 +90,10 @@ def send_discord(symbol, bias, price, open_, event, prev_bias=None):
     req = urllib.request.Request(
         DISCORD_WEBHOOK_URL,
         data=json.dumps(payload).encode(),
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "User-Agent": "trend-tracker (github-actions, v1)",
+        },
         method="POST",
     )
     urllib.request.urlopen(req, timeout=15).read()
