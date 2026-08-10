@@ -3,8 +3,10 @@
 Intraday bullish/bearish trend tracker.
 
 Signal:  current price vs the day's OPEN (with a deadband to avoid whipsaw).
-Alerts:  posts to Discord only when a ticker's bias FLIPS (bullish <-> bearish),
-         plus one "opening bias" note per ticker on the first read of a new day.
+Posting: two modes, set by POST_EVERY_RUN below.
+           True  -> posts every ticker's current status on every run.
+           False -> posts only on a FLIP (bullish <-> bearish), plus one
+                    opening-bias note per ticker at the first read of the day.
 Runtime: built for GitHub Actions on a schedule. State persists in state.json,
          which the workflow commits back to the repo between runs.
 """
@@ -23,7 +25,8 @@ from zoneinfo import ZoneInfo
 # ---------------------------------------------------------------------------
 TICKERS = ["SPY", "QQQ"]        # add / remove symbols here
 DEADBAND_PCT = 0.001            # 0.1% neutral zone around the open (anti-whipsaw)
-ALERT_ON_NEW_DAY = True         # announce each ticker's starting bias once per day
+POST_EVERY_RUN = True           # True: post status every run. False: flips only.
+ALERT_ON_NEW_DAY = True         # (flip-only mode) announce starting bias each day
 STATE_FILE = Path("state.json")
 # ---------------------------------------------------------------------------
 
@@ -60,14 +63,17 @@ def classify(price: float, open_: float, band: float) -> str:
     return "neutral"
 
 
-def send_discord(symbol: str, bias: str, price: float, open_: float, prev_bias):
+def send_discord(symbol, bias, price, open_, event, prev_bias=None):
     pct = (price / open_ - 1) * 100 if open_ else 0
     color = {"bullish": 0x2ECC71, "bearish": 0xE74C3C}.get(bias, 0x95A5A6)
     arrow = {"bullish": "\u25b2", "bearish": "\u25bc"}.get(bias, "\u2014")
-    if prev_bias:
+
+    if event == "flip":
         title = f"{arrow} {symbol} flipped {prev_bias.upper()} \u2192 {bias.upper()}"
-    else:
+    elif event == "open":
         title = f"{arrow} {symbol} opening bias: {bias.upper()}"
+    else:  # "status"
+        title = f"{arrow} {symbol} {bias.upper()}"
 
     payload = {
         "embeds": [{
@@ -139,16 +145,24 @@ def main():
             and bias != prev_bias
         )
 
-        should_alert, alert_prev = False, prev_bias
-        if new_day and ALERT_ON_NEW_DAY and bias != "neutral":
-            should_alert, alert_prev = True, None
+        # Classify the event for this read.
+        if new_day and bias != "neutral":
+            event = "open"
         elif flipped:
-            should_alert = True
+            event = "flip"
+        else:
+            event = "status"
 
-        if should_alert:
+        # Decide whether to post.
+        if POST_EVERY_RUN:
+            should_post = True
+        else:
+            should_post = event in ("open", "flip")
+
+        if should_post:
             try:
-                send_discord(symbol, bias, price, open_, alert_prev)
-                print(f"[{symbol}] ALERT {alert_prev} -> {bias} @ {price}")
+                send_discord(symbol, bias, price, open_, event, prev_bias)
+                print(f"[{symbol}] POST {event}: {bias} @ {price} (prev {prev_bias})")
             except (urllib.error.URLError, TimeoutError) as e:
                 print(f"[{symbol}] discord post failed: {e}")
         else:
