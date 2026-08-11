@@ -1,0 +1,42 @@
+name: Market Briefings
+
+# Morning brief ~9:00 ET and close recap ~4:10 ET.
+# Cron is UTC; both EDT and EST windows are covered and the script
+# itself decides morning vs close from Eastern time (and skips weekends).
+
+on:
+  schedule:
+    - cron: "0 13 * * 1-5"   # 9:00 ET during EDT (8:00 ET during EST - still morning)
+    - cron: "10 20 * * 1-5"  # 4:10 ET during EDT (3:10 ET during EST - close window)
+    - cron: "10 21 * * 1-5"  # 4:10 ET during EST backup
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Force a mode (morning or close); leave blank for auto"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: market-briefings
+  cancel-in-progress: false
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Post briefing
+        env:
+          FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          BRIEF_MODE: ${{ github.event.inputs.mode }}
+        run: python briefing.py
