@@ -1,14 +1,16 @@
 name: Market Briefings
 
-# Morning brief ~9:00 ET and close recap ~4:10 ET.
-# Cron is UTC; both EDT and EST windows are covered and the script
-# itself decides morning vs close from Eastern time (and skips weekends).
+# Morning brief ~7:00 AM Central, close recap ~3:10 PM Central.
+# Cron is UTC; pairs cover both CDT (UTC-5) and CST (UTC-6). The script
+# windows itself in Central Time, so the off-season cron of each pair
+# lands outside the window and skips harmlessly.
 
 on:
   schedule:
-    - cron: "0 13 * * 1-5"   # 9:00 ET during EDT (8:00 ET during EST - still morning)
-    - cron: "10 20 * * 1-5"  # 4:10 ET during EDT (3:10 ET during EST - close window)
-    - cron: "10 21 * * 1-5"  # 4:10 ET during EST backup
+    - cron: "0 12 * * 1-5"   # 7:00 CT during CDT
+    - cron: "0 13 * * 1-5"   # 7:00 CT during CST (CDT: 8:00 CT - still in morning window... skipped, window ends 8:15; acts as backup)
+    - cron: "10 20 * * 1-5"  # 3:10 PM CT during CDT
+    - cron: "10 21 * * 1-5"  # 3:10 PM CT during CST
   workflow_dispatch:
     inputs:
       mode:
