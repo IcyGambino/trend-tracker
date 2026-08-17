@@ -187,7 +187,8 @@ def main():
         title, color = f"\u2600\ufe0f Morning Brief - {now_ct.strftime('%b %d')}", 0x3498DB
     else:
         system = ("You write an end-of-day recap for a trader's Discord. You get closing reads vs "
-                  "open AND a timeline of intraday bias flips - use it to narrate how the day "
+                  "open AND a timeline of intraday bias flips (times are Central Time) - use it to "
+                  "narrate how the day "
                   "developed (early tone, reversals, where it settled). Note confluence/divergence "
                   "across indexes, semis leadership, fear read (VXX, already flipped), standout "
                   "names, and what carried into the close. " + guardrails)
