@@ -27,6 +27,7 @@ FINNHUB_API_KEY = os.environ.get("FINNHUB_API_KEY", "")
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL", "")
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 ET = ZoneInfo("America/New_York")
+CT = ZoneInfo("America/Chicago")  # user's local time - briefing schedule anchors here
 
 
 def http_json(url, payload=None, headers=None, timeout=25):
@@ -149,22 +150,24 @@ def main():
     if not (FINNHUB_API_KEY and DISCORD_WEBHOOK_URL and ANTHROPIC_API_KEY):
         sys.exit("Missing FINNHUB_API_KEY, DISCORD_WEBHOOK_URL, or ANTHROPIC_API_KEY.")
 
-    now_et = datetime.now(tz=ET)
-    if now_et.weekday() >= 5 and not os.environ.get("BRIEF_MODE"):
+    now_ct = datetime.now(tz=CT)
+    if now_ct.weekday() >= 5 and not os.environ.get("BRIEF_MODE"):
         print("Weekend - no briefing.")
         return
 
     mode = os.environ.get("BRIEF_MODE")
     if not mode:
-        # Auto mode windows (ET): morning 7:00-11:59, close 16:00-16:59.
-        # Outside these, skip - this makes the DST backup crons harmless
-        # instead of double-posting.
-        if 7 <= now_et.hour < 12:
+        # Central Time windows: morning 6:30-7:45 AM CT (pre-open; market
+        # opens 8:30 CT), close 3:00-3:59 PM CT (market closes 3:00 CT).
+        # Windows are sized so exactly ONE cron of each DST pair lands
+        # inside - the other skips harmlessly. No double posts, no misses.
+        hm = now_ct.hour * 60 + now_ct.minute
+        if 6 * 60 + 30 <= hm <= 7 * 60 + 45:
             mode = "morning"
-        elif now_et.hour == 16:
+        elif now_ct.hour == 15:
             mode = "close"
         else:
-            print(f"No briefing window at {now_et:%H:%M} ET - skipping.")
+            print(f"No briefing window at {now_ct:%H:%M} CT - skipping.")
             return
 
     market = build_market_lines(mode)
@@ -181,7 +184,7 @@ def main():
                   "semis (SMH), fear read (VXX, already flipped to market meaning), notable single "
                   "names, and one thing to watch at the open. " + guardrails)
         prompt = f"PRE-MARKET DATA:\n{market}\n\nHEADLINES:\n{headlines or 'none available'}"
-        title, color = f"\u2600\ufe0f Morning Brief - {now_et.strftime('%b %d')}", 0x3498DB
+        title, color = f"\u2600\ufe0f Morning Brief - {now_ct.strftime('%b %d')}", 0x3498DB
     else:
         system = ("You write an end-of-day recap for a trader's Discord. You get closing reads vs "
                   "open AND a timeline of intraday bias flips - use it to narrate how the day "
@@ -190,7 +193,7 @@ def main():
                   "names, and what carried into the close. " + guardrails)
         prompt = (f"CLOSING DATA (vs open):\n{market}\n\nINTRADAY FLIP TIMELINE:\n{story or 'no flips logged'}"
                   f"\n\nHEADLINES:\n{headlines or 'none available'}")
-        title, color = f"\U0001F514 Close Recap - {now_et.strftime('%b %d')}", 0x9B59B6
+        title, color = f"\U0001F514 Close Recap - {now_ct.strftime('%b %d')}", 0x9B59B6
 
     body = ask_claude(prompt, system)
     post_discord(title, body, color)
