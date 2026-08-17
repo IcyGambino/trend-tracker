@@ -35,7 +35,8 @@ STATE_FILE = Path("state.json")
 
 FINNHUB_API_KEY = os.environ.get("FINNHUB_API_KEY", "")
 DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL", "")
-ET = ZoneInfo("America/New_York")
+ET = ZoneInfo("America/New_York")   # market gate stays on ET - that's when the market trades
+CT = ZoneInfo("America/Chicago")    # display/logged times use the user's local Central time
 
 
 def market_is_open(now_et: datetime) -> bool:
@@ -265,7 +266,7 @@ def main():
         # and future tools can narrate how the day developed.
         hist = rec.get("history", []) if rec.get("day") == today else []
         if event in ("open", "flip"):
-            hist.append({"t": now_et.strftime("%H:%M"), "event": event, "bias": bias, "price": price})
+            hist.append({"t": now_et.astimezone(CT).strftime("%H:%M") + " CT", "event": event, "bias": bias, "price": price})
         rec_out["history"] = hist[-40:]
         state[symbol] = rec_out
 
