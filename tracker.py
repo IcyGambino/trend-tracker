@@ -30,6 +30,9 @@ INVERSE_TICKERS = {"VXX", "TLT", "UVXY"}  # risk-off tells: price UP = market-be
 DEADBAND_PCT = 0.001            # 0.1% neutral zone around the open (anti-whipsaw)
 POST_EVERY_RUN = True           # True: post status every run. False: flips only.
 ALERT_ON_NEW_DAY = True         # (flip-only mode) announce starting bias each day
+SETUP_ALERTS = True             # detect + alert tradeable setups (ORB, prev-close cross, HOD/LOD push)
+OR_MINUTES = 30                 # opening range length in minutes (9:30-10:00 ET)
+HODLOD_COOLDOWN_MIN = 60        # min minutes between repeat high/low-push alerts per ticker
 STATE_FILE = Path("state.json")
 # ---------------------------------------------------------------------------
 
@@ -178,6 +181,99 @@ def send_discord_combined(kind: str, bias: str, details: list):
     urllib.request.urlopen(req, timeout=15).read()
 
 
+def send_discord_setup(symbol, title, price, detail, bullish_side, context=""):
+    color = 0x2ECC71 if bullish_side else 0xE74C3C
+    arrow = "\U0001F3AF"  # dart
+    desc = detail + (f"\n\n{context}" if context else "")
+    payload = {
+        "embeds": [{
+            "title": f"{arrow} SETUP: {symbol} {title}",
+            "description": desc,
+            "color": color,
+            "fields": [{"name": "Price", "value": f"${price:,.2f}", "inline": True}],
+            "timestamp": datetime.now(tz=ZoneInfo("UTC")).isoformat(),
+        }]
+    }
+    req = urllib.request.Request(
+        DISCORD_WEBHOOK_URL,
+        data=json.dumps(payload).encode(),
+        headers={"Content-Type": "application/json",
+                 "User-Agent": "trend-tracker (github-actions, v1)"},
+        method="POST",
+    )
+    urllib.request.urlopen(req, timeout=15).read()
+
+
+def detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
+    """Detect intraday setups from price action. Uses only same-day state.
+    Fired setups are recorded in rec_out['setups'] so each alerts once
+    (HOD/LOD push repeats on a cooldown). Returns list of alert tuples."""
+    alerts = []
+    same_day = rec.get("day") == rec_out["day"]
+    setups = dict(rec.get("setups", {})) if same_day else {}
+    prev_price = rec.get("price") if same_day else None
+    prev_h = rec.get("day_high") if same_day else None
+    prev_l = rec.get("day_low") if same_day else None
+    pc = q.get("pc") or 0
+    day_h = q.get("h") or 0
+    day_l = q.get("l") or 0
+    mins = now_et.hour * 60 + now_et.minute          # minutes since midnight ET
+    or_end = 9 * 60 + 30 + OR_MINUTES
+
+    # --- Opening range: build during the window, then watch for breaks ----
+    if mins <= or_end:
+        or_h = max(rec.get("or_high") or 0, price) if same_day else price
+        or_l = min(rec.get("or_low") or 1e12, price) if same_day else price
+        rec_out["or_high"], rec_out["or_low"] = or_h, or_l
+    else:
+        or_h = rec.get("or_high") if same_day else None
+        or_l = rec.get("or_low") if same_day else None
+        rec_out["or_high"], rec_out["or_low"] = or_h, or_l
+        if or_h and or_l and or_h > or_l:
+            if price > or_h * (1 + DEADBAND_PCT) and not setups.get("orb_up"):
+                setups["orb_up"] = True
+                alerts.append(("OPENING RANGE BREAKOUT \u2191", True,
+                               f"Broke above the first-{OR_MINUTES}-min high ${or_h:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}."))
+            if price < or_l * (1 - DEADBAND_PCT) and not setups.get("orb_dn"):
+                setups["orb_dn"] = True
+                alerts.append(("OPENING RANGE BREAKDOWN \u2193", False,
+                               f"Broke below the first-{OR_MINUTES}-min low ${or_l:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}."))
+
+    # --- Prev-close cross (gap fill / reclaim / breakdown) ----------------
+    if pc and prev_price:
+        if prev_price < pc <= price and not setups.get("pc_reclaim"):
+            setups["pc_reclaim"] = True
+            alerts.append(("RECLAIMED PREV CLOSE \u2191", True,
+                           f"Crossed back above yesterday's close ${pc:,.2f} from below."))
+        if prev_price > pc >= price and not setups.get("pc_lose"):
+            setups["pc_lose"] = True
+            alerts.append(("LOST PREV CLOSE \u2193", False,
+                           f"Fell back below yesterday's close ${pc:,.2f} from above."))
+
+    # --- HOD / LOD extension (trend pressing), cooldown-limited -----------
+    # Gated until after the opening range: the first 30 min makes "new highs"
+    # constantly - that's range-building, not a setup. Also skipped on a tick
+    # where an ORB just fired (redundant with the breakout alert).
+    orb_fired_now = any("RANGE" in a[0] for a in alerts)
+    if mins > or_end and not orb_fired_now:
+        if prev_h and day_h > prev_h and bias == "bullish":
+            last = setups.get("hod_last", -10**6)
+            if mins - last >= HODLOD_COOLDOWN_MIN:
+                setups["hod_last"] = mins
+                alerts.append(("PUSHING NEW HIGHS \u2191", True,
+                               f"New high of day ${day_h:,.2f} with bullish bias intact."))
+        if prev_l and day_l and prev_l > 0 and day_l < prev_l and bias == "bearish":
+            last = setups.get("lod_last", -10**6)
+            if mins - last >= HODLOD_COOLDOWN_MIN:
+                setups["lod_last"] = mins
+                alerts.append(("PRESSING NEW LOWS \u2193", False,
+                               f"New low of day ${day_l:,.2f} with bearish bias intact."))
+
+    rec_out["setups"] = setups
+    rec_out["day_high"], rec_out["day_low"] = day_h, day_l
+    return alerts
+
+
 def load_state() -> dict:
     if STATE_FILE.exists():
         try:
@@ -267,6 +363,25 @@ def main():
         hist = rec.get("history", []) if rec.get("day") == today else []
         if event in ("open", "flip"):
             hist.append({"t": now_et.astimezone(CT).strftime("%H:%M") + " CT", "event": event, "bias": bias, "price": price})
+
+        # Setup engine: ORB breaks, prev-close crosses, HOD/LOD pressure.
+        if SETUP_ALERTS and symbol not in INVERSE_TICKERS:
+            try:
+                for s_title, s_bull, s_detail in detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
+                    context = claude_blurb(
+                        f"Setup alert: {symbol} {s_title}. {s_detail} "
+                        f"Current price ${price:,.2f}, open ${open_:,.2f}, bias {bias}."
+                    )
+                    try:
+                        send_discord_setup(symbol, s_title, price, s_detail, s_bull, context)
+                        print(f"[{symbol}] SETUP {s_title}")
+                    except (urllib.error.URLError, TimeoutError) as e:
+                        print(f"[{symbol}] setup post failed: {e}")
+                    hist.append({"t": now_et.astimezone(CT).strftime("%H:%M") + " CT",
+                                 "event": "setup", "bias": s_title, "price": price})
+            except Exception as e:
+                print(f"[{symbol}] setup detection error: {e}")
+
         rec_out["history"] = hist[-40:]
         state[symbol] = rec_out
 
