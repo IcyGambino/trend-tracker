@@ -1,11 +1,21 @@
 name: Market Trend Tracker
-# Self-looping runner: one job wakes at the open and re-runs tracker.py every
-# 5 minutes until the close, so posts don't depend on GitHub's cron firing on
-# time. A daily cron kicks it off; you can also start it manually any time.
+# Relay design: GitHub caps jobs at 6h, and a full session (pre-open -> 3:00 PM
+# CT close) is longer than that. So two loop runs relay: the morning leg covers
+# the open until ~12:45 PM CT, then exits; the afternoon kicker (queued behind
+# it by the concurrency group) takes over and covers through the close.
+# Multiple kicker crons give redundancy against GitHub skipping a tick; any
+# extras just queue and exit in seconds once they see the session is closed.
 
 on:
   schedule:
-    - cron: "0,30 13 * * 1-5"   # ~9:00 & 9:30 ET kickers (belt and suspenders)
+    # Morning kickers ~7:15-7:45 AM CT (CDT; +1h in CST). GitHub lag of
+    # 30-60 min lands the start near the 8:30 CT open. Duplicates queue
+    # and no-op.
+    - cron: "15,45 12 * * 1-5"
+    # Afternoon relay kickers ~12:30-1:00 PM CT. These queue behind the
+    # morning leg and take over when it exits.
+    - cron: "30 17 * * 1-5"
+    - cron: "0 18 * * 1-5"
   workflow_dispatch: {}
 
 permissions:
@@ -18,7 +28,7 @@ concurrency:
 jobs:
   track:
     runs-on: ubuntu-latest
-    timeout-minutes: 350   # covers a full session; GitHub hard-caps jobs at 6h
+    timeout-minutes: 345   # hard safety net under GitHub's 6h cap
     steps:
       - uses: actions/checkout@v4
 
@@ -26,7 +36,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Loop tracker every 5 minutes until close
+      - name: Loop tracker until handoff or close
         env:
           FINNHUB_API_KEY: ${{ secrets.FINNHUB_API_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -49,17 +59,35 @@ jobs:
             done
           }
 
-          # Loop for the session. tracker.py self-gates to ET market hours,
-          # so ticks before 9:30 / after 16:00 just print "market closed".
-          END=$(( $(date +%s) + 60*60*7 ))   # run up to 7h; timeout-minutes also guards
-          while [ "$(date +%s)" -lt "$END" ]; do
+          START=$(date +%s)
+          MAX_RUNTIME=$(( 60 * 285 ))          # each leg runs at most 4h45m
+          MORNING_LEG=0
+          # If we started before 17:15 UTC (~12:15 PM CT in CDT), we're the
+          # morning leg: we exit at 17:45 UTC so the queued afternoon leg
+          # takes over cleanly.
+          if [ "$(date -u +%H%M)" -lt "1715" ]; then
+            MORNING_LEG=1
+          fi
+
+          while true; do
             python tracker.py || true
             persist_state || true
 
-            # Stop early once we're clearly past the close (21:05 UTC = 16:05 ET EDT / covers EST too)
-            HM=$(date -u +%H%M)
-            if [ "$HM" -gt "2110" ]; then
-              echo "Past close - exiting loop."
+            NOW_HM=$(date -u +%H%M)
+            # Past close (16:00 ET = 20:00 UTC EDT / 21:00 UTC EST) plus
+            # buffer -> done for the day.
+            if [ "$NOW_HM" -gt "2105" ]; then
+              echo "Past close - exiting."
+              break
+            fi
+            # Morning leg hands off at 17:45 UTC (~12:45 PM CT in CDT).
+            if [ "$MORNING_LEG" = "1" ] && [ "$NOW_HM" -gt "1745" ]; then
+              echo "Morning leg handing off to afternoon relay."
+              break
+            fi
+            # Runtime safety: exit before GitHub's cap; a queued kicker resumes.
+            if [ $(( $(date +%s) - START )) -gt "$MAX_RUNTIME" ]; then
+              echo "Max leg runtime reached - exiting for relay."
               break
             fi
             sleep 300
