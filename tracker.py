@@ -53,10 +53,23 @@ def market_is_open(now_et: datetime) -> bool:
 
 
 def fetch_quote(symbol: str) -> dict:
-    url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}"
-    req = urllib.request.Request(url, headers={"User-Agent": "trend-tracker"})
-    with urllib.request.urlopen(req, timeout=15) as r:
-        return json.loads(r.read().decode())
+    """Fetch a quote with retries - Finnhub has transient timeouts/503s,
+    and one flaky call shouldn't wipe a whole 5-minute tick."""
+    import time as _t
+    last_err = None
+    for attempt in range(1, 4):
+        try:
+            url = f"https://finnhub.io/api/v1/quote?symbol={symbol}&token={FINNHUB_API_KEY}"
+            req = urllib.request.Request(url, headers={"User-Agent": "trend-tracker"})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                q = json.loads(r.read().decode())
+            if q.get("c"):          # got a real price - done
+                return q
+            last_err = "empty quote"
+        except Exception as e:      # timeout, 503, connection reset, bad JSON
+            last_err = e
+        _t.sleep(2 * attempt)       # 2s, 4s backoff between attempts
+    raise urllib.error.URLError(f"failed after 3 attempts: {last_err}")
 
 
 def classify(price: float, open_: float, band: float) -> str:
