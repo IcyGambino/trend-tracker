@@ -246,22 +246,26 @@ def detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
             if price > or_h * (1 + DEADBAND_PCT) and not setups.get("orb_up"):
                 setups["orb_up"] = True
                 alerts.append(("OPENING RANGE BREAKOUT \u2191", True,
-                               f"Broke above the first-{OR_MINUTES}-min high ${or_h:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}."))
+                               f"Broke above the first-{OR_MINUTES}-min high ${or_h:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}.",
+                               f"**Playbook:** trend-intact while holding above ${or_h:,.2f}; a drop back below it is the classic failed-breakout (fakeout) tell. Check VWAP + volume on your chart for conviction - the bot can't see volume."))
             if price < or_l * (1 - DEADBAND_PCT) and not setups.get("orb_dn"):
                 setups["orb_dn"] = True
                 alerts.append(("OPENING RANGE BREAKDOWN \u2193", False,
-                               f"Broke below the first-{OR_MINUTES}-min low ${or_l:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}."))
+                               f"Broke below the first-{OR_MINUTES}-min low ${or_l:,.2f}. Range was ${or_l:,.2f}-${or_h:,.2f}.",
+                               f"**Playbook:** downside-intact while below ${or_l:,.2f}; reclaiming it is the failed-breakdown tell. Confirm with VWAP + volume on your chart."))
 
     # --- Prev-close cross (gap fill / reclaim / breakdown) ----------------
     if pc and prev_price:
         if prev_price < pc <= price and not setups.get("pc_reclaim"):
             setups["pc_reclaim"] = True
             alerts.append(("RECLAIMED PREV CLOSE \u2191", True,
-                           f"Crossed back above yesterday's close ${pc:,.2f} from below."))
+                           f"Crossed back above yesterday's close ${pc:,.2f} from below.",
+                           f"**Playbook:** recovery-intact while holding above ${pc:,.2f}; slipping back under it is a failed reclaim. Strongest when the broad tape agrees."))
         if prev_price > pc >= price and not setups.get("pc_lose"):
             setups["pc_lose"] = True
             alerts.append(("LOST PREV CLOSE \u2193", False,
-                           f"Fell back below yesterday's close ${pc:,.2f} from above."))
+                           f"Fell back below yesterday's close ${pc:,.2f} from above.",
+                           f"**Playbook:** broken while below ${pc:,.2f}; a quick reclaim would neutralize it. Watch whether the day's low holds next."))
 
     # --- HOD / LOD extension (trend pressing), cooldown-limited -----------
     # Gated until after the opening range: the first 30 min makes "new highs"
@@ -273,14 +277,18 @@ def detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
             last = setups.get("hod_last", -10**6)
             if mins - last >= HODLOD_COOLDOWN_MIN:
                 setups["hod_last"] = mins
+                ref = or_h or open_
                 alerts.append(("PUSHING NEW HIGHS \u2191", True,
-                               f"New high of day ${day_h:,.2f} with bullish bias intact."))
+                               f"New high of day ${day_h:,.2f} with bullish bias intact.",
+                               f"**Playbook:** continuation conditions - trend traders typically stay with strength while it holds above ${ref:,.2f}; the first close back below that level or the open ${open_:,.2f} is the usual first warning. Volume fading into new highs (check your chart) weakens the read."))
         if prev_l and day_l and prev_l > 0 and day_l < prev_l and bias == "bearish":
             last = setups.get("lod_last", -10**6)
             if mins - last >= HODLOD_COOLDOWN_MIN:
                 setups["lod_last"] = mins
+                ref = or_l or open_
                 alerts.append(("PRESSING NEW LOWS \u2193", False,
-                               f"New low of day ${day_l:,.2f} with bearish bias intact."))
+                               f"New low of day ${day_l:,.2f} with bearish bias intact.",
+                               f"**Playbook:** downside continuation while below ${ref:,.2f}; reclaiming that level or the open ${open_:,.2f} is the usual first sign the slide is done."))
 
     rec_out["setups"] = setups
     rec_out["day_high"], rec_out["day_low"] = day_h, day_l
@@ -380,13 +388,16 @@ def main():
         # Setup engine: ORB breaks, prev-close crosses, HOD/LOD pressure.
         if SETUP_ALERTS and symbol not in INVERSE_TICKERS:
             try:
-                for s_title, s_bull, s_detail in detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
+                for s_title, s_bull, s_detail, s_playbook in detect_setups(symbol, rec, rec_out, q, price, open_, bias, now_et):
                     context = claude_blurb(
-                        f"Setup alert: {symbol} {s_title}. {s_detail} "
-                        f"Current price ${price:,.2f}, open ${open_:,.2f}, bias {bias}."
+                        f"Setup alert: {symbol} {s_title}. {s_detail} Current price ${price:,.2f}, "
+                        f"open ${open_:,.2f}, bias {bias}. In 2 sentences describe what typically "
+                        f"confirms this pattern vs what invalidates it. Conditional framing only - "
+                        f"no directives, no advice."
                     )
+                    detail_full = s_detail + "\n\n" + s_playbook
                     try:
-                        send_discord_setup(symbol, s_title, price, s_detail, s_bull, context)
+                        send_discord_setup(symbol, s_title, price, detail_full, s_bull, context)
                         print(f"[{symbol}] SETUP {s_title}")
                     except (urllib.error.URLError, TimeoutError) as e:
                         print(f"[{symbol}] setup post failed: {e}")
