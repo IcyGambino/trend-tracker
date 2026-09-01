@@ -1,8 +1,7 @@
 name: Register Discord Command
 
-# One-time setup helper. Run it manually from the Actions tab.
-# Needs two repo secrets: DISCORD_APP_ID and DISCORD_BOT_TOKEN.
-# Safe to re-run: registering again just overwrites the same commands.
+# Re-runnable: registering again just overwrites the same commands.
+# Needs repo secrets DISCORD_APP_ID and DISCORD_BOT_TOKEN.
 
 on:
   workflow_dispatch: {}
@@ -13,36 +12,21 @@ jobs:
     steps:
       - name: Register /ask
         run: |
-          curl -sS -X POST \
-            "https://discord.com/api/v10/applications/${{ secrets.DISCORD_APP_ID }}/commands" \
-            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "name": "ask",
-              "description": "Ask the market intel bot a question",
-              "options": [{
-                "type": 3,
-                "name": "question",
-                "description": "What do you want to know?",
-                "required": false
-              }]
-            }' | tee ask.json
-          grep -q '"id"' ask.json && echo "/ask registered." || (echo "/ask registration failed."; exit 1)
+          curl -sS -X POST "https://discord.com/api/v10/applications/${{ secrets.DISCORD_APP_ID }}/commands" \
+            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" -H "Content-Type: application/json" \
+            -d '{"name":"ask","description":"Ask the market intel bot a question","options":[{"type":3,"name":"question","description":"What do you want to know?","required":false}]}' | tee ask.json
+          grep -q '"id"' ask.json || (echo "/ask failed"; exit 1)
 
       - name: Register /ticker
         run: |
-          curl -sS -X POST \
-            "https://discord.com/api/v10/applications/${{ secrets.DISCORD_APP_ID }}/commands" \
-            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" \
-            -H "Content-Type: application/json" \
-            -d '{
-              "name": "ticker",
-              "description": "Deep dive on a single ticker with recent news",
-              "options": [{
-                "type": 3,
-                "name": "symbol",
-                "description": "Ticker symbol, e.g. NVDA",
-                "required": true
-              }]
-            }' | tee ticker.json
-          grep -q '"id"' ticker.json && echo "/ticker registered." || (echo "/ticker registration failed."; exit 1)
+          curl -sS -X POST "https://discord.com/api/v10/applications/${{ secrets.DISCORD_APP_ID }}/commands" \
+            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" -H "Content-Type: application/json" \
+            -d '{"name":"ticker","description":"Deep dive on a single ticker with recent news","options":[{"type":3,"name":"symbol","description":"Ticker symbol, e.g. NVDA","required":true}]}' | tee ticker.json
+          grep -q '"id"' ticker.json || (echo "/ticker failed"; exit 1)
+
+      - name: Register /learn
+        run: |
+          curl -sS -X POST "https://discord.com/api/v10/applications/${{ secrets.DISCORD_APP_ID }}/commands" \
+            -H "Authorization: Bot ${{ secrets.DISCORD_BOT_TOKEN }}" -H "Content-Type: application/json" \
+            -d '{"name":"learn","description":"Explain a trading term in plain English","options":[{"type":3,"name":"term","description":"e.g. orb, vwap, fakeout, confluence","required":true}]}' | tee learn.json
+          grep -q '"id"' learn.json || (echo "/learn failed"; exit 1)
