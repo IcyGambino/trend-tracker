@@ -1,0 +1,26 @@
+name: Post Trading School
+
+# One-time (re-runnable) poster for the #trading-school curriculum.
+# Run manually from the Actions tab. Needs the LESSONS_WEBHOOK_URL secret
+# pointing at the school channel's webhook.
+
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Post curriculum
+        env:
+          LESSONS_WEBHOOK_URL: ${{ secrets.LESSONS_WEBHOOK_URL }}
+        run: python lessons.py
