@@ -2,22 +2,31 @@
   "SPY": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 772.09,
+    "price": 771.34,
     "open": 772.925,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 772.68,
     "or_low": 772.07,
-    "setups": {},
+    "setups": {
+      "lod_last": 612
+    },
     "day_high": 772.925,
-    "day_low": 771.81,
-    "history": []
+    "day_low": 771.2618,
+    "history": [
+      {
+        "t": "09:12 CT",
+        "event": "setup",
+        "bias": "PRESSING NEW LOWS \u2193",
+        "price": 771.34
+      }
+    ]
   },
   "QQQ": {
     "bias": "bullish",
     "day": "2026-09-04",
-    "price": 721.18,
+    "price": 720.47,
     "open": 720.1275,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 721.45,
     "or_low": 719.2,
     "setups": {
@@ -41,9 +50,9 @@
   "IWM": {
     "bias": "bullish",
     "day": "2026-09-04",
-    "price": 295.05,
+    "price": 295.18,
     "open": 294.605,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 295.09,
     "or_low": 293.65,
     "setups": {},
@@ -67,9 +76,9 @@
   "SMH": {
     "bias": "bullish",
     "day": "2026-09-04",
-    "price": 567.61,
+    "price": 567.69,
     "open": 560.495,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 569,
     "or_low": 560.27,
     "setups": {
@@ -89,9 +98,9 @@
   "VXX": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 17.54,
+    "price": 17.53,
     "open": 17.51,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "history": [
       {
         "t": "08:30 CT",
@@ -110,22 +119,31 @@
   "MSFT": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 504.14,
+    "price": 503.15,
     "open": 509.61,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 510.09,
     "or_low": 503.78,
-    "setups": {},
+    "setups": {
+      "orb_dn": true
+    },
     "day_high": 511,
-    "day_low": 502.8,
-    "history": []
+    "day_low": 502.71,
+    "history": [
+      {
+        "t": "09:12 CT",
+        "event": "setup",
+        "bias": "OPENING RANGE BREAKDOWN \u2193",
+        "price": 503.15
+      }
+    ]
   },
   "NVDA": {
     "bias": "bullish",
     "day": "2026-09-04",
-    "price": 233.96,
+    "price": 233.65,
     "open": 230.725,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 234.51,
     "or_low": 230.59,
     "setups": {
@@ -145,29 +163,37 @@
   "TSLA": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 357.23,
+    "price": 355.73,
     "open": 366.37,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 362.27,
     "or_low": 357.09,
-    "setups": {},
+    "setups": {
+      "orb_dn": true
+    },
     "day_high": 366.37,
-    "day_low": 356.2603,
+    "day_low": 355.49,
     "history": [
       {
         "t": "08:30 CT",
         "event": "open",
         "bias": "bearish",
         "price": 362.27
+      },
+      {
+        "t": "09:12 CT",
+        "event": "setup",
+        "bias": "OPENING RANGE BREAKDOWN \u2193",
+        "price": 355.73
       }
     ]
   },
   "PLTR": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 177.13,
+    "price": 176.73,
     "open": 181.05,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 180.64,
     "or_low": 177.19,
     "setups": {
@@ -200,9 +226,9 @@
   "SPCX": {
     "bias": "bearish",
     "day": "2026-09-04",
-    "price": 149.89,
+    "price": 149.29,
     "open": 149.795,
-    "updated": "2026-09-04T10:06:59.635314-04:00",
+    "updated": "2026-09-04T10:12:12.495028-04:00",
     "or_high": 150.54,
     "or_low": 148.22,
     "setups": {
