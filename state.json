@@ -2,9 +2,9 @@
   "SPY": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 767.69,
+    "price": 768.09,
     "open": 768.125,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 769.13,
     "or_low": 767.23,
     "setups": {
@@ -31,15 +31,16 @@
   "QQQ": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 718.8,
+    "price": 719.97,
     "open": 719.5145,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 720.88,
     "or_low": 717.34,
     "setups": {
       "pc_lose": true,
       "orb_dn": true,
-      "lod_last": 607
+      "lod_last": 607,
+      "pc_reclaim": true
     },
     "day_high": 721.886,
     "day_low": 715.57,
@@ -61,6 +62,12 @@
         "event": "setup",
         "bias": "PRESSING NEW LOWS \u2193",
         "price": 716.62
+      },
+      {
+        "t": "10:15 CT",
+        "event": "setup",
+        "bias": "RECLAIMED PREV CLOSE \u2191",
+        "price": 719.97
       }
     ]
   },
@@ -71,9 +78,9 @@
   "IWM": {
     "bias": "bullish",
     "day": "2026-09-08",
-    "price": 295.29,
+    "price": 295.31,
     "open": 294.695,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 295.41,
     "or_low": 294.34,
     "setups": {},
@@ -91,9 +98,9 @@
   "SMH": {
     "bias": "bullish",
     "day": "2026-09-08",
-    "price": 575.92,
+    "price": 577.3,
     "open": 574.135,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 578.89,
     "or_low": 567.05,
     "setups": {
@@ -131,17 +138,17 @@
   "VXX": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 17.84,
+    "price": 17.83,
     "open": 17.69,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "history": []
   },
   "MSFT": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 492.81,
+    "price": 493.36,
     "open": 494.41,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 494.11,
     "or_low": 491.99,
     "setups": {
@@ -174,9 +181,9 @@
   "NVDA": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 227.35,
+    "price": 227.42,
     "open": 232.13,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 233.22,
     "or_low": 229.56,
     "setups": {
@@ -222,9 +229,9 @@
   "TSLA": {
     "bias": "bullish",
     "day": "2026-09-08",
-    "price": 365.21,
+    "price": 364.81,
     "open": 355.4025,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 361.43,
     "or_low": 357.13,
     "setups": {
@@ -251,9 +258,9 @@
   "PLTR": {
     "bias": "bearish",
     "day": "2026-09-08",
-    "price": 171.92,
+    "price": 172.15,
     "open": 173.215,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 174.37,
     "or_low": 171.41,
     "setups": {
@@ -284,16 +291,17 @@
     ]
   },
   "SPCX": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-09-08",
-    "price": 148.47,
+    "price": 149.27,
     "open": 149.0925,
-    "updated": "2026-09-08T11:10:12.999471-04:00",
+    "updated": "2026-09-08T11:15:22.171083-04:00",
     "or_high": 149.03,
     "or_low": 146,
     "setups": {
       "pc_lose": true,
-      "pc_reclaim": true
+      "pc_reclaim": true,
+      "orb_up": true
     },
     "day_high": 149.77,
     "day_low": 145.14,
@@ -309,6 +317,18 @@
         "event": "setup",
         "bias": "RECLAIMED PREV CLOSE \u2191",
         "price": 148.21
+      },
+      {
+        "t": "10:15 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 149.27
+      },
+      {
+        "t": "10:15 CT",
+        "event": "setup",
+        "bias": "OPENING RANGE BREAKOUT \u2191",
+        "price": 149.27
       }
     ]
   }
