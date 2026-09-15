@@ -4,7 +4,7 @@
     "day": "2026-09-15",
     "price": 756.86,
     "open": 758.8085,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 759.76,
     "or_low": 759.26,
     "setups": {
@@ -37,9 +37,9 @@
   "QQQ": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 704.89,
+    "price": 704.66,
     "open": 707.465,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 709.16,
     "or_low": 707.9,
     "setups": {
@@ -88,9 +88,9 @@
   "IWM": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 284.51,
+    "price": 284.44,
     "open": 286.07,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 286.47,
     "or_low": 285.66,
     "setups": {
@@ -117,18 +117,18 @@
   "SMH": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 541.28,
+    "price": 541.02,
     "open": 543.7675,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 547.26,
     "or_low": 544.77,
     "setups": {
       "orb_dn": true,
-      "lod_last": 656,
+      "lod_last": 734,
       "pc_lose": true
     },
     "day_high": 548.19,
-    "day_low": 541.03,
+    "day_low": 540.615,
     "history": [
       {
         "t": "08:33 CT",
@@ -171,15 +171,21 @@
         "event": "setup",
         "bias": "LOST PREV CLOSE \u2193",
         "price": 541.28
+      },
+      {
+        "t": "11:14 CT",
+        "event": "setup",
+        "bias": "PRESSING NEW LOWS \u2193",
+        "price": 541.02
       }
     ]
   },
   "VXX": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 18.37,
+    "price": 18.38,
     "open": 18.110000000000003,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "history": [
       {
         "t": "08:33 CT",
@@ -192,9 +198,9 @@
   "MSFT": {
     "bias": "bullish",
     "day": "2026-09-15",
-    "price": 500.45,
+    "price": 499.89,
     "open": 500.15,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 504.55,
     "or_low": 500.57,
     "setups": {
@@ -245,9 +251,9 @@
   "NVDA": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 212.1,
+    "price": 211.95,
     "open": 212.4875,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 213.77,
     "or_low": 212.86,
     "setups": {
@@ -286,9 +292,9 @@
   "TSLA": {
     "bias": "bullish",
     "day": "2026-09-15",
-    "price": 361.29,
+    "price": 361.3,
     "open": 358.605,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 361.64,
     "or_low": 355.07,
     "setups": {
@@ -346,17 +352,18 @@
   "PLTR": {
     "bias": "bullish",
     "day": "2026-09-15",
-    "price": 173.38,
+    "price": 173.21,
     "open": 170.585,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 172.78,
     "or_low": 169.71,
     "setups": {
       "orb_up": true,
       "hod_last": 723,
-      "pc_reclaim": true
+      "pc_reclaim": true,
+      "pc_lose": true
     },
-    "day_high": 173.5799,
+    "day_high": 173.6,
     "day_low": 169.45,
     "history": [
       {
@@ -388,15 +395,21 @@
         "event": "setup",
         "bias": "RECLAIMED PREV CLOSE \u2191",
         "price": 173.38
+      },
+      {
+        "t": "11:14 CT",
+        "event": "setup",
+        "bias": "LOST PREV CLOSE \u2193",
+        "price": 173.21
       }
     ]
   },
   "SPCX": {
     "bias": "bearish",
     "day": "2026-09-15",
-    "price": 144.2,
+    "price": 144.03,
     "open": 148.3225,
-    "updated": "2026-09-15T12:09:18.802658-04:00",
+    "updated": "2026-09-15T12:14:38.578518-04:00",
     "or_high": 146.81,
     "or_low": 144.62,
     "setups": {
@@ -405,7 +418,7 @@
       "lod_last": 729
     },
     "day_high": 148.545,
-    "day_low": 144.13,
+    "day_low": 143.925,
     "history": [
       {
         "t": "08:33 CT",
