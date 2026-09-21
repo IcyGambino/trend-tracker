@@ -2,16 +2,16 @@
   "SPY": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 771.06,
+    "price": 771.8,
     "open": 766.2005,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 767.46,
     "or_low": 766.4,
     "setups": {
-      "hod_last": 669,
+      "hod_last": 731,
       "orb_up": true
     },
-    "day_high": 771.36,
+    "day_high": 771.85,
     "day_low": 766.03,
     "history": [
       {
@@ -31,22 +31,28 @@
         "event": "setup",
         "bias": "PUSHING NEW HIGHS \u2191",
         "price": 769.59
+      },
+      {
+        "t": "11:11 CT",
+        "event": "setup",
+        "bias": "PUSHING NEW HIGHS \u2191",
+        "price": 771.8
       }
     ]
   },
   "QQQ": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 737.61,
+    "price": 738.25,
     "open": 727.31,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 732.31,
     "or_low": 728.24,
     "setups": {
-      "hod_last": 663,
+      "hod_last": 731,
       "orb_up": true
     },
-    "day_high": 737.89,
+    "day_high": 738.2874,
     "day_low": 727.31,
     "history": [
       {
@@ -66,6 +72,12 @@
         "event": "setup",
         "bias": "PUSHING NEW HIGHS \u2191",
         "price": 735.93
+      },
+      {
+        "t": "11:11 CT",
+        "event": "setup",
+        "bias": "PUSHING NEW HIGHS \u2191",
+        "price": 738.25
       }
     ]
   },
@@ -76,9 +88,9 @@
   "IWM": {
     "bias": "bearish",
     "day": "2026-09-21",
-    "price": 285.98,
+    "price": 286.12,
     "open": 285.86,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 286.29,
     "or_low": 285.15,
     "setups": {},
@@ -89,9 +101,9 @@
   "SMH": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 590.93,
+    "price": 591.31,
     "open": 580.9475,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 584.72,
     "or_low": 580.45,
     "setups": {
@@ -132,15 +144,15 @@
     "day": "2026-09-21",
     "price": 17.6,
     "open": 17.490000000000002,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "history": []
   },
   "MSFT": {
     "bias": "bearish",
     "day": "2026-09-21",
-    "price": 494.57,
+    "price": 494.3,
     "open": 494.7525,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 495.55,
     "or_low": 493.45,
     "setups": {
@@ -219,9 +231,9 @@
   "NVDA": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 225.09,
+    "price": 225.35,
     "open": 223.2175,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 224.58,
     "or_low": 223.01,
     "setups": {
@@ -260,9 +272,9 @@
   "TSLA": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 374.31,
+    "price": 375.39,
     "open": 369.9225,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 377.48,
     "or_low": 371.86,
     "setups": {
@@ -295,16 +307,16 @@
   "PLTR": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 182.31,
+    "price": 182.54,
     "open": 178.3625,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 180.78,
     "or_low": 177.95,
     "setups": {
       "orb_up": true,
       "hod_last": 706
     },
-    "day_high": 182.46,
+    "day_high": 182.58,
     "day_low": 176.76,
     "history": [
       {
@@ -348,9 +360,9 @@
   "SPCX": {
     "bias": "bullish",
     "day": "2026-09-21",
-    "price": 155.3,
+    "price": 155.46,
     "open": 154.46,
-    "updated": "2026-09-21T12:06:35.717259-04:00",
+    "updated": "2026-09-21T12:11:41.884231-04:00",
     "or_high": 155.5,
     "or_low": 154.57,
     "setups": {
