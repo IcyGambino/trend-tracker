@@ -2,9 +2,9 @@
   "SPY": {
     "bias": "bearish",
     "day": "2026-09-28",
-    "price": 765.72,
+    "price": 767.46,
     "open": 768.27,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -30,9 +30,9 @@
   "QQQ": {
     "bias": "bearish",
     "day": "2026-09-28",
-    "price": 735.84,
+    "price": 737.74,
     "open": 739.1475,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -62,9 +62,9 @@
   "IWM": {
     "bias": "bearish",
     "day": "2026-09-28",
-    "price": 279.45,
+    "price": 280.43,
     "open": 280.435,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -88,11 +88,11 @@
     ]
   },
   "SMH": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-09-28",
-    "price": 598.88,
+    "price": 601.04,
     "open": 599.895,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -106,15 +106,21 @@
         "event": "setup",
         "bias": "PRESSING NEW LOWS \u2193",
         "price": 596.7
+      },
+      {
+        "t": "11:22 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 601.04
       }
     ]
   },
   "VXX": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-09-28",
-    "price": 17.55,
+    "price": 17.44,
     "open": 17.520000000000003,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "history": [
       {
         "t": "09:33 CT",
@@ -127,19 +133,27 @@
         "event": "flip",
         "bias": "bearish",
         "price": 17.58
+      },
+      {
+        "t": "11:22 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 17.44
       }
     ]
   },
   "MSFT": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-09-28",
-    "price": 510.81,
+    "price": 512.16,
     "open": 510.985,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
-    "setups": {},
-    "day_high": 510.985,
+    "setups": {
+      "hod_last": 742
+    },
+    "day_high": 512.41,
     "day_low": 502.22,
     "history": [
       {
@@ -147,15 +161,27 @@
         "event": "open",
         "bias": "bearish",
         "price": 507.66
+      },
+      {
+        "t": "11:22 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 512.16
+      },
+      {
+        "t": "11:22 CT",
+        "event": "setup",
+        "bias": "PUSHING NEW HIGHS \u2191",
+        "price": 512.16
       }
     ]
   },
   "NVDA": {
     "bias": "bullish",
     "day": "2026-09-28",
-    "price": 230.64,
+    "price": 231.25,
     "open": 226.505,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -173,9 +199,9 @@
   "TSLA": {
     "bias": "bearish",
     "day": "2026-09-28",
-    "price": 360.35,
+    "price": 361.17,
     "open": 368.52,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -201,9 +227,9 @@
   "PLTR": {
     "bias": "bullish",
     "day": "2026-09-28",
-    "price": 188.69,
+    "price": 188.77,
     "open": 187.5305,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -221,9 +247,9 @@
   "SPCX": {
     "bias": "bearish",
     "day": "2026-09-28",
-    "price": 146.84,
+    "price": 147.03,
     "open": 148.635,
-    "updated": "2026-09-28T12:16:56.233728-04:00",
+    "updated": "2026-09-28T12:22:02.651385-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
