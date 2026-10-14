@@ -2,16 +2,16 @@
   "SPY": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 768.41,
+    "price": 768.37,
     "open": 774.93,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "lod_last": 804
     },
     "day_high": 776.35,
-    "day_low": 768.07,
+    "day_low": 767.93,
     "history": [
       {
         "t": "12:08 CT",
@@ -30,16 +30,16 @@
   "QQQ": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 728.96,
+    "price": 728.82,
     "open": 737.99,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "lod_last": 809
     },
     "day_high": 740.53,
-    "day_low": 728.58,
+    "day_low": 728.28,
     "history": [
       {
         "t": "12:08 CT",
@@ -62,16 +62,16 @@
   "IWM": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 271.03,
+    "price": 270.93,
     "open": 273.37,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "lod_last": 799
     },
     "day_high": 274.46,
-    "day_low": 270.955,
+    "day_low": 270.83,
     "history": [
       {
         "t": "12:08 CT",
@@ -90,9 +90,9 @@
   "SMH": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 566.72,
+    "price": 566.62,
     "open": 576.5,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -112,7 +112,7 @@
     "day": "2026-10-14",
     "price": 17.28,
     "open": 16.790000000000003,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "history": [
       {
         "t": "12:08 CT",
@@ -125,16 +125,16 @@
   "MSFT": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 535.38,
+    "price": 535.35,
     "open": 545.28,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "lod_last": 809
     },
     "day_high": 545.75,
-    "day_low": 534.94,
+    "day_low": 534.915,
     "history": [
       {
         "t": "12:08 CT",
@@ -153,29 +153,37 @@
   "NVDA": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 221.3,
+    "price": 221.41,
     "open": 225.54,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
-    "setups": {},
+    "setups": {
+      "lod_last": 825
+    },
     "day_high": 226,
-    "day_low": 221.11,
+    "day_low": 221.07,
     "history": [
       {
         "t": "12:08 CT",
         "event": "open",
         "bias": "bearish",
         "price": 222.44
+      },
+      {
+        "t": "12:45 CT",
+        "event": "setup",
+        "bias": "PRESSING NEW LOWS \u2193",
+        "price": 221.41
       }
     ]
   },
   "TSLA": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 366.54,
+    "price": 365.78,
     "open": 371.17,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -193,16 +201,16 @@
   "PLTR": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 201.89,
+    "price": 201.94,
     "open": 207.03,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "lod_last": 793
     },
     "day_high": 209.29,
-    "day_low": 201.67,
+    "day_low": 201.645,
     "history": [
       {
         "t": "12:08 CT",
@@ -221,9 +229,9 @@
   "SPCX": {
     "bias": "bearish",
     "day": "2026-10-14",
-    "price": 152.52,
+    "price": 152.21,
     "open": 154.98999999999998,
-    "updated": "2026-10-14T13:40:09.181544-04:00",
+    "updated": "2026-10-14T13:45:16.364661-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
