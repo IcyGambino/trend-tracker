@@ -2,15 +2,15 @@
   "SPY": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 770.76,
+    "price": 771.07,
     "open": 765.8,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 941
     },
-    "day_high": 771.115,
+    "day_high": 771.14,
     "day_low": 765.21,
     "history": [
       {
@@ -30,15 +30,15 @@
   "QQQ": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 722.28,
+    "price": 722.78,
     "open": 712.135,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 941
     },
-    "day_high": 722.77,
+    "day_high": 722.84,
     "day_low": 712.135,
     "history": [
       {
@@ -62,15 +62,15 @@
   "IWM": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 280.24,
+    "price": 280.33,
     "open": 277.26,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 905
     },
-    "day_high": 280.39,
+    "day_high": 280.4,
     "day_low": 276.89,
     "history": [
       {
@@ -90,15 +90,15 @@
   "SMH": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 558.84,
+    "price": 559.76,
     "open": 543.79,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 941
     },
-    "day_high": 559.11,
+    "day_high": 559.76,
     "day_low": 543.79,
     "history": [
       {
@@ -118,9 +118,9 @@
   "VXX": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 18.11,
+    "price": 18.09,
     "open": 18.21,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "history": [
       {
         "t": "12:59 CT",
@@ -133,12 +133,14 @@
   "MSFT": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 532.49,
+    "price": 532.69,
     "open": 531.31,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
-    "setups": {},
+    "setups": {
+      "pc_reclaim": true
+    },
     "day_high": 534.7,
     "day_low": 528.33,
     "history": [
@@ -147,15 +149,21 @@
         "event": "flip",
         "bias": "bullish",
         "price": 532.53
+      },
+      {
+        "t": "14:46 CT",
+        "event": "setup",
+        "bias": "RECLAIMED PREV CLOSE \u2191",
+        "price": 532.69
       }
     ]
   },
   "NVDA": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 218.1,
+    "price": 218.41,
     "open": 216.7,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -173,15 +181,15 @@
   "TSLA": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 408.03,
+    "price": 408.27,
     "open": 394.3,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 905
     },
-    "day_high": 408.43,
+    "day_high": 408.45,
     "day_low": 394.3,
     "history": [
       {
@@ -201,9 +209,9 @@
   "PLTR": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 199.7,
+    "price": 200.05,
     "open": 197.855,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -221,9 +229,9 @@
   "SPCX": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 149.64,
+    "price": 149.63,
     "open": 147.2925,
-    "updated": "2026-10-27T15:41:28.966528-04:00",
+    "updated": "2026-10-27T15:46:43.196057-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
