@@ -2,9 +2,9 @@
   "SPY": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 769.25,
+    "price": 769.12,
     "open": 765.8,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -24,7 +24,7 @@
     "day": "2026-10-27",
     "price": 720.42,
     "open": 712.135,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -40,15 +40,15 @@
     ]
   },
   "_combined": {
-    "state": "confluence-bullish",
+    "state": "divergence",
     "day": "2026-10-27"
   },
   "IWM": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 279.99,
+    "price": 280,
     "open": 277.26,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -66,9 +66,9 @@
   "SMH": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 557.16,
+    "price": 556.99,
     "open": 543.79,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -86,9 +86,9 @@
   "VXX": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 18.21,
+    "price": 18.2,
     "open": 18.21,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "history": [
       {
         "t": "12:59 CT",
@@ -99,11 +99,11 @@
     ]
   },
   "MSFT": {
-    "bias": null,
+    "bias": "bearish",
     "day": "2026-10-27",
-    "price": 530.78,
+    "price": 530.61,
     "open": 531.31,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -114,9 +114,9 @@
   "NVDA": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 217.57,
+    "price": 217.54,
     "open": 216.7,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -134,9 +134,9 @@
   "TSLA": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 405.6,
+    "price": 405.86,
     "open": 394.3,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -154,9 +154,9 @@
   "PLTR": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 199.45,
+    "price": 199.61,
     "open": 197.855,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -174,9 +174,9 @@
   "SPCX": {
     "bias": "bullish",
     "day": "2026-10-27",
-    "price": 149.47,
+    "price": 149.76,
     "open": 147.2925,
-    "updated": "2026-10-27T14:29:43.207707-04:00",
+    "updated": "2026-10-27T14:34:48.732447-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
