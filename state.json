@@ -1,10 +1,10 @@
 {
   "SPY": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-10-28",
-    "price": 771.63,
+    "price": 772.1,
     "open": 771.04,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -16,19 +16,25 @@
         "event": "open",
         "bias": "bearish",
         "price": 770.23
+      },
+      {
+        "t": "13:46 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 772.1
       }
     ]
   },
   "QQQ": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 723.75,
+    "price": 724.57,
     "open": 724.56,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
-    "day_high": 726.02,
+    "day_high": 726.13,
     "day_low": 720.3,
     "history": [
       {
@@ -44,15 +50,16 @@
     "day": "2026-10-28"
   },
   "IWM": {
-    "bias": "bearish",
+    "bias": "bullish",
     "day": "2026-10-28",
-    "price": 280.15,
+    "price": 280.56,
     "open": 280.135,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
-      "lod_last": 865
+      "lod_last": 865,
+      "pc_reclaim": true
     },
     "day_high": 281.48,
     "day_low": 279.05,
@@ -68,21 +75,33 @@
         "event": "setup",
         "bias": "PRESSING NEW LOWS \u2193",
         "price": 279.48
+      },
+      {
+        "t": "13:46 CT",
+        "event": "flip",
+        "bias": "bullish",
+        "price": 280.56
+      },
+      {
+        "t": "13:46 CT",
+        "event": "setup",
+        "bias": "RECLAIMED PREV CLOSE \u2191",
+        "price": 280.56
       }
     ]
   },
   "SMH": {
     "bias": "bullish",
     "day": "2026-10-28",
-    "price": 567.79,
+    "price": 567.82,
     "open": 563.255,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
       "hod_last": 875
     },
-    "day_high": 570.115,
+    "day_high": 571,
     "day_low": 560.515,
     "history": [
       {
@@ -104,7 +123,7 @@
     "day": "2026-10-28",
     "price": 17.84,
     "open": 18.14,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "history": [
       {
         "t": "13:20 CT",
@@ -117,9 +136,9 @@
   "MSFT": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 528.66,
+    "price": 528.21,
     "open": 531.785,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -145,9 +164,9 @@
   "NVDA": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 217.25,
+    "price": 216.5,
     "open": 219.6525,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -173,9 +192,9 @@
   "TSLA": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 403.44,
+    "price": 403.59,
     "open": 410.4875,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
@@ -193,9 +212,9 @@
   "PLTR": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 194.24,
+    "price": 194.02,
     "open": 197.51,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {
@@ -221,9 +240,9 @@
   "SPCX": {
     "bias": "bearish",
     "day": "2026-10-28",
-    "price": 144.7,
+    "price": 144.56,
     "open": 148.66,
-    "updated": "2026-10-28T14:41:01.565977-04:00",
+    "updated": "2026-10-28T14:46:12.249053-04:00",
     "or_high": null,
     "or_low": null,
     "setups": {},
